@@ -59,8 +59,10 @@ public class MainActivity extends AppCompatActivity {
 
         FitnessOptions fitnessOptions =
                 FitnessOptions.builder()
-                        .addDataType(DataType.TYPE_STEP_COUNT_CUMULATIVE)
-                        .addDataType(DataType.TYPE_STEP_COUNT_DELTA)
+                        // .addDataType(DataType.TYPE_STEP_COUNT_CUMULATIVE)
+                        // .addDataType(DataType.TYPE_STEP_COUNT_DELTA)
+                        .addDataType(DataType.TYPE_CALORIES_EXPENDED)
+                        .addDataType(DataType.AGGREGATE_CALORIES_EXPENDED)
                         .build();
         if (!GoogleSignIn.hasPermissions(GoogleSignIn.getLastSignedInAccount(this), fitnessOptions)) {
             GoogleSignIn.requestPermissions(
@@ -87,7 +89,7 @@ public class MainActivity extends AppCompatActivity {
         // To create a subscription, invoke the Recording API. As soon as the subscription is
         // active, fitness data will start recording.
         Fitness.getRecordingClient(this, GoogleSignIn.getLastSignedInAccount(this))
-                .subscribe(DataType.TYPE_STEP_COUNT_CUMULATIVE)
+                .subscribe(DataType.TYPE_CALORIES_EXPENDED)
                 .addOnCompleteListener(
                         new OnCompleteListener<Void>() {
                             @Override
@@ -107,23 +109,23 @@ public class MainActivity extends AppCompatActivity {
      */
     private void readData() {
         Fitness.getHistoryClient(this, GoogleSignIn.getLastSignedInAccount(this))
-                .readDailyTotal(DataType.TYPE_STEP_COUNT_DELTA)
+                .readDailyTotal(DataType.TYPE_CALORIES_EXPENDED)
                 .addOnSuccessListener(
                         new OnSuccessListener<DataSet>() {
                             @Override
                             public void onSuccess(DataSet dataSet) {
-                                long total =
+                                float total =
                                         dataSet.isEmpty()
                                                 ? 0
-                                                : dataSet.getDataPoints().get(0).getValue(Field.FIELD_STEPS).asInt();
-                                Log.i(TAG, "Total steps: " + total);
+                                                : dataSet.getDataPoints().get(0).getValue(Field.FIELD_CALORIES).asFloat();
+                                Log.i(TAG, "Total calories: " + total);
                             }
                         })
                 .addOnFailureListener(
                         new OnFailureListener() {
                             @Override
                             public void onFailure(@NonNull Exception e) {
-                                Log.w(TAG, "There was a problem getting the step count.", e);
+                                Log.w(TAG, "There was a problem getting the calories.", e);
                             }
                         });
     }
