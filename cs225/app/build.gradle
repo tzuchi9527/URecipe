@@ -19,6 +19,11 @@ android {
 }
 
 dependencies {
+    // compile "com.google.android.gms:play-services-fitness:${google_play_services_library}"
+    // compile "com.google.android.gms:play-services-auth:${google_play_services_library}"
+    // compile "com.android.support:appcompat-v7:${google_support_library}"
+    // compile "com.android.support:design:${google_support_library}"
+    // compile fileTree(dir: 'libs', include: ['*.jar'])
     compile 'com.google.android.gms:play-services-fitness:16.0.1'
     compile 'com.google.android.gms:play-services-auth:16.0.1'
     implementation fileTree(dir: 'libs', include: ['*.jar'])
