@@ -16,7 +16,7 @@ limitations under the License.
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context=".MainActivity" >
+    tools:context=".Main3Activity" >
     <item android:id="@+id/action_settings"
         android:title="@string/action_settings"
         android:orderInCategory="100"
@@ -24,6 +24,16 @@ limitations under the License.
 
     <item android:id="@+id/action_read_data"
         android:title="Read calories"
+        android:orderInCategory="100"
+        app:showAsAction="never" />
+
+    <item android:id="@+id/action_personal_model"
+        android:title="Personal Model"
+        android:orderInCategory="100"
+        app:showAsAction="never" />
+
+    <item android:id="@+id/action_food_record"
+        android:title="Food Record"
         android:orderInCategory="100"
         app:showAsAction="never" />
 

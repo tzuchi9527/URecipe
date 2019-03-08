@@ -3,51 +3,61 @@ package com.example.apple.urecipe;
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Color;
-import android.support.annotation.NonNull;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-// import android.util.Log;
+import android.support.annotation.NonNull;
+import android.support.design.widget.BottomNavigationView;
+import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
-
-import com.google.android.gms.auth.api.signin.GoogleSignIn;
-import com.google.android.gms.fitness.Fitness;
-import com.google.android.gms.fitness.FitnessOptions;
-import com.google.android.gms.fitness.data.Bucket;
-import com.google.android.gms.fitness.data.DataPoint;
-import com.google.android.gms.fitness.data.DataSet;
-import com.google.android.gms.fitness.data.DataSource;
-import com.google.android.gms.fitness.data.DataType;
-import com.google.android.gms.fitness.data.Field;
-import com.google.android.gms.fitness.request.DataDeleteRequest;
-import com.google.android.gms.fitness.request.DataReadRequest;
-import com.google.android.gms.fitness.request.DataUpdateRequest;
-import com.google.android.gms.fitness.result.DataReadResponse;
-import com.google.android.gms.tasks.Continuation;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
+import android.widget.TextView;
 
 import com.example.apple.urecipe.common.logger.Log;
 import com.example.apple.urecipe.common.logger.LogView;
 import com.example.apple.urecipe.common.logger.LogWrapper;
 import com.example.apple.urecipe.common.logger.MessageOnlyLogFilter;
-
-import java.text.DateFormat;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.List;
-import java.util.concurrent.TimeUnit;
-
-import static java.text.DateFormat.getDateInstance;
-import static java.text.DateFormat.getTimeInstance;
-
+import com.google.android.gms.auth.api.signin.GoogleSignIn;
+import com.google.android.gms.fitness.Fitness;
+import com.google.android.gms.fitness.FitnessOptions;
+import com.google.android.gms.fitness.data.DataSet;
+import com.google.android.gms.fitness.data.DataType;
+import com.google.android.gms.fitness.data.Field;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 
 public class MainActivity extends AppCompatActivity {
     public static final String TAG = "Urecipe";
     // Identifier to identify the sign in activity.
     private static final int REQUEST_OAUTH_REQUEST_CODE = 1;
+
+    private TextView mTextMessage;
+
+    private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
+            = new BottomNavigationView.OnNavigationItemSelectedListener() {
+
+        @Override
+        public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+            switch (item.getItemId()) {
+                case R.id.navigation_home:
+                    Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                    startActivity(intent);
+                    mTextMessage.setText(R.string.title_home);
+                    return true;
+                case R.id.navigation_food_diary:
+                    Intent intent2 = new Intent(getApplicationContext(), FoodDiary.class);
+                    startActivity(intent2);
+                    mTextMessage.setText(R.string.title_food_diary);
+                    return true;
+                case R.id.navigation_user:
+                    Intent intent3 = new Intent(getApplicationContext(), User.class);
+                    startActivity(intent3);
+                    mTextMessage.setText(R.string.title_user);
+                    return true;
+            }
+            return false;
+        }
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,6 +83,10 @@ public class MainActivity extends AppCompatActivity {
         } else {
             subscribe();
         }
+
+        mTextMessage = (TextView) findViewById(R.id.message);
+        BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
+        navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
     }
 
     @Override
@@ -144,6 +158,14 @@ public class MainActivity extends AppCompatActivity {
             readData();
             return true;
         }
+        else if (id == R.id.action_personal_model){
+            Intent intent = new Intent(this, PersonalModel.class);
+            startActivity(intent);
+        }
+        else if (id == R.id.action_food_record){
+            Intent intent = new Intent(this, FoodRecord.class);
+            startActivity(intent);
+        }
         return super.onOptionsItemSelected(item);
     }
 
@@ -167,4 +189,5 @@ public class MainActivity extends AppCompatActivity {
         msgFilter.setNext(logView);
         Log.i(TAG, "Ready");
     }
+
 }
