@@ -1,4 +1,5 @@
 package com.example.apple.urecipe;
+import android.support.annotation.Nullable;
 
 import android.content.Context;
 import android.net.Uri;
@@ -7,27 +8,25 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.support.annotation.Nullable;
 
-public class FoodDiary extends Fragment {
+public class Home extends Fragment {
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_food_diary, container, false);
+        return inflater.inflate(R.layout.fragment_home, container, false);
     }
 }
-//
 //
 ///**
 // * A simple {@link Fragment} subclass.
 // * Activities that contain this fragment must implement the
-// * {@link FoodDiary.OnFragmentInteractionListener} interface
+// * {@link Home.OnFragmentInteractionListener} interface
 // * to handle interaction events.
-// * Use the {@link FoodDiary#newInstance} factory method to
+// * Use the {@link Home#newInstance} factory method to
 // * create an instance of this fragment.
 // */
-//public class FoodDiary extends Fragment {
+//public class Home extends Fragment {
 ////    // TODO: Rename parameter arguments, choose names that match
 ////    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
 ////    private static final String ARG_PARAM1 = "param1";
@@ -39,7 +38,7 @@ public class FoodDiary extends Fragment {
 //
 //    private OnFragmentInteractionListener mListener;
 //
-//    public FoodDiary() {
+//    public Home() {
 //        // Required empty public constructor
 //    }
 //
@@ -49,26 +48,28 @@ public class FoodDiary extends Fragment {
 //     *
 //     * @param param1 Parameter 1.
 //     * @param param2 Parameter 2.
-//     * @return A new instance of fragment FoodDiary.
+//     * @return A new instance of fragment Home.
 //     */
 //    // TODO: Rename and change types and number of parameters
-//    public static FoodDiary newInstance(String param1, String param2) {
+//    public static Home newInstance(String param1, String param2) {
+//        Home fragment = new Home();
 //
-//        return new FoodDiary();
+//        return fragment;
 //    }
 //
 //    @Override
 //    public void onCreate(Bundle savedInstanceState) {
 //        super.onCreate(savedInstanceState);
+//
 //    }
 //
 //    @Override
 //    public View onCreateView(LayoutInflater inflater, ViewGroup container,
 //                             Bundle savedInstanceState) {
 //        // Inflate the layout for this fragment
-//        return inflater.inflate(R.layout.fragment_food_diary, container, false);
+//        return inflater.inflate(R.layout.fragment_home, container, false);
 //    }
-//
+////
 ////    // TODO: Rename method, update argument and hook method into UI event
 ////    public void onButtonPressed(Uri uri) {
 ////        if (mListener != null) {

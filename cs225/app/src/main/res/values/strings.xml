@@ -5,10 +5,6 @@
     <string name="action_dump_subs">List Active Subscriptions</string>
     <string name="action_cancel_subs">Cancel subscriptions</string>
     <string name="action_settings">Settings</string>
-    <string name="title_activity_food_record">FoodRecord</string>
-    <string name="edit_age">enter your age</string>
-    <string name="edit_height">enter your height</string>
-    <string name="button_save">save</string>
     <string name="title_activity_main2">Main2Activity</string>
     <string name="title_home">Home</string>
     <string name="title_food_diary">Food Diary</string>
@@ -16,4 +12,14 @@
     <string name="title_activity_user">User</string>
     <string name="title_activity_food_diary">FoodDiary</string>
     <string name="title_user">User</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="user_name">user_name</string>
+    <string name="user_gender">user_gender</string>
+    <string name="user_age">user_age</string>
+    <string name="user_height">user_height</string>
+    <string name="user_weight">user_weight</string>
+    <string name="user_edit">EDIT</string>
+    <string name="title_activity_edit_personal_model">edit_personal_model</string>
 </resources>

@@ -1,15 +1,19 @@
 package com.example.apple.urecipe;
 
+import android.view.View;
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
+import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentPagerAdapter;
 
 import com.example.apple.urecipe.common.logger.Log;
 import com.example.apple.urecipe.common.logger.LogView;
@@ -33,31 +37,25 @@ public class MainActivity extends AppCompatActivity {
 
     private TextView mTextMessage;
 
+    ViewPager viewPager;
+
+    private Home home = new Home();
+    private User user = new User();
+    private FoodDiary food_diary = new FoodDiary();
+
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
 
         @Override
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-            switch (item.getItemId()) {
-                case R.id.navigation_home:
-                    Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-                    startActivity(intent);
-                    mTextMessage.setText(R.string.title_home);
-                    return true;
-                case R.id.navigation_food_diary:
-                    Intent intent2 = new Intent(getApplicationContext(), FoodDiary.class);
-                    startActivity(intent2);
-                    mTextMessage.setText(R.string.title_food_diary);
-                    return true;
-                case R.id.navigation_user:
-                    Intent intent3 = new Intent(getApplicationContext(), User.class);
-                    startActivity(intent3);
-                    mTextMessage.setText(R.string.title_user);
-                    return true;
-            }
-            return false;
+            viewPager.setCurrentItem(item.getOrder());
+            return true;
+
         }
     };
+
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -85,9 +83,60 @@ public class MainActivity extends AppCompatActivity {
         }
 
         mTextMessage = (TextView) findViewById(R.id.message);
-        BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
+        viewPager = (ViewPager) findViewById(R.id.viewpager);
+
+        final BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
+
+        viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+                navigation.getMenu().getItem(position).setChecked(true);
+
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        });
+
+        // 如果想禁止滑动，可以把下面的代码取消注释
+//        viewPager.setOnTouchListener(new View.OnTouchListener() {
+//            @Override
+//            public boolean onTouch(View v, MotionEvent event) {
+//                return true;
+//            }
+//        });
+
+        viewPager.setAdapter(new FragmentPagerAdapter(getSupportFragmentManager()) {
+            @Override
+            public Fragment getItem(int position) {
+                switch (position) {
+                    case 0:
+                        return home;
+                    case 1:
+                        return food_diary;
+                    case 2:
+                        return user;
+                }
+                return null;
+            }
+
+            @Override
+            public int getCount() {
+                return 3;
+            }
+        }
+        );
     }
+
+
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -158,14 +207,14 @@ public class MainActivity extends AppCompatActivity {
             readData();
             return true;
         }
-        else if (id == R.id.action_personal_model){
-            Intent intent = new Intent(this, PersonalModel.class);
-            startActivity(intent);
-        }
-        else if (id == R.id.action_food_record){
-            Intent intent = new Intent(this, FoodRecord.class);
-            startActivity(intent);
-        }
+//        else if (id == R.id.action_personal_model){
+//            Intent intent = new Intent(this, PersonalModel.class);
+//            startActivity(intent);
+//        }
+//        else if (id == R.id.action_food_record){
+//            Intent intent = new Intent(this, FoodRecord.class);
+//            startActivity(intent);
+//        }
         return super.onOptionsItemSelected(item);
     }
 
