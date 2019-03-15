@@ -12,7 +12,7 @@ import android.support.annotation.Nullable;
 import android.view.View.OnClickListener;
 import android.content.Intent;
 
-public class User extends Fragment {
+public class UserFragment extends Fragment {
     TextView user_name, user_age, user_gender, user_height, user_weight;
     String name = "Annie";
 

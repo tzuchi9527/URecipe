@@ -9,7 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.support.annotation.Nullable;
 
-public class FoodDiary extends Fragment {
+public class FoodDiaryFragment extends Fragment {
 
     @Nullable
     @Override

@@ -27,11 +27,11 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.example.apple.urecipe.common.logger.Log;
 import com.google.android.gms.tasks.Task;
 
-public class Home extends Fragment {
+public class HomeFragment extends Fragment {
 
     public static final String TAG = "Urecipe";
     private static final int REQUEST_OAUTH_REQUEST_CODE = 1;
-    float total_calories = 0;
+    float expended_calories = 0;
 
     @Nullable
     @Override
@@ -93,11 +93,11 @@ public class Home extends Fragment {
                         new OnSuccessListener<DataSet>() {
                             @Override
                             public void onSuccess(DataSet dataSet) {
-                                 total_calories =
+                                 expended_calories =
                                         dataSet.isEmpty()
                                                 ? 0
                                                 : dataSet.getDataPoints().get(0).getValue(Field.FIELD_CALORIES).asFloat();
-                                Log.i(TAG, "Total calories: " + total_calories);
+                                Log.i(TAG, "Total calories: " + expended_calories);
                             }
                         })
                 .addOnFailureListener(

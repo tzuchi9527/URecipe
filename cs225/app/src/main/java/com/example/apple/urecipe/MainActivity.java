@@ -39,9 +39,9 @@ public class MainActivity extends AppCompatActivity {
 
     ViewPager viewPager;
 
-    private Home home = new Home();
-    private User user = new User();
-    private FoodDiary food_diary = new FoodDiary();
+    private HomeFragment home = new HomeFragment();
+    private UserFragment user = new UserFragment();
+    private FoodDiaryFragment food_diary = new FoodDiaryFragment();
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
