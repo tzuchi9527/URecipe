@@ -63,6 +63,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         // This method sets up our custom logger, which will print all log messages to the device
         // screen, as well as to adb logcat.
+        /*
         initializeLogging();
 
         FitnessOptions fitnessOptions =
@@ -81,6 +82,7 @@ public class MainActivity extends AppCompatActivity {
         } else {
             subscribe();
         }
+        */
 
         mTextMessage = (TextView) findViewById(R.id.message);
         viewPager = (ViewPager) findViewById(R.id.viewpager);
@@ -170,6 +172,7 @@ public class MainActivity extends AppCompatActivity {
      * Reads the current daily step total, computed from midnight of the current day on the device's
      * current timezone.
      */
+
     private void readData() {
         Fitness.getHistoryClient(this, GoogleSignIn.getLastSignedInAccount(this))
                 .readDailyTotal(DataType.TYPE_CALORIES_EXPENDED)

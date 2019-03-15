@@ -1,4 +1,6 @@
 package com.example.apple.urecipe;
+import android.graphics.Color;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
 import android.content.Context;
@@ -9,12 +11,102 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.apple.urecipe.common.logger.LogView;
+import com.example.apple.urecipe.common.logger.LogWrapper;
+import com.example.apple.urecipe.common.logger.MessageOnlyLogFilter;
+import com.google.android.gms.auth.api.signin.GoogleSignIn;
+import com.google.android.gms.fitness.Fitness;
+import com.google.android.gms.fitness.FitnessOptions;
+import com.google.android.gms.fitness.data.DataSet;
+import com.google.android.gms.fitness.data.DataType;
+import com.google.android.gms.fitness.data.Field;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+
+import com.example.apple.urecipe.common.logger.Log;
+import com.google.android.gms.tasks.Task;
+
 public class Home extends Fragment {
+
+    public static final String TAG = "Urecipe";
+    private static final int REQUEST_OAUTH_REQUEST_CODE = 1;
+    float total_calories = 0;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+
+        // initializeLogging();
+
+        FitnessOptions fitnessOptions =
+                FitnessOptions.builder()
+                        // .addDataType(DataType.TYPE_STEP_COUNT_CUMULATIVE)
+                        // .addDataType(DataType.TYPE_STEP_COUNT_DELTA)
+                        .addDataType(DataType.TYPE_CALORIES_EXPENDED)
+                        .addDataType(DataType.AGGREGATE_CALORIES_EXPENDED)
+                        .build();
+        if (!GoogleSignIn.hasPermissions(GoogleSignIn.getLastSignedInAccount(getActivity()), fitnessOptions)) {
+            GoogleSignIn.requestPermissions(
+                    this,
+                    REQUEST_OAUTH_REQUEST_CODE,
+                    GoogleSignIn.getLastSignedInAccount(getActivity()),
+                    fitnessOptions);
+        } else {
+            subscribe();
+        }
+
+        readData();
+
         return inflater.inflate(R.layout.fragment_home, container, false);
+    }
+
+
+    /** Records step data by requesting a subscription to background step data. */
+    public void subscribe() {
+        // To create a subscription, invoke the Recording API. As soon as the subscription is
+        // active, fitness data will start recording.
+        Fitness.getRecordingClient(getActivity(), GoogleSignIn.getLastSignedInAccount(getActivity()))
+                .subscribe(DataType.TYPE_CALORIES_EXPENDED)
+                .addOnCompleteListener(
+                        new OnCompleteListener<Void>() {
+                            @Override
+                            public void onComplete(@NonNull Task<Void> task) {
+                                if (task.isSuccessful()) {
+                                    Log.i(TAG, "Successfully subscribed!");
+                                } else {
+                                    Log.w(TAG, "There was a problem subscribing.", task.getException());
+                                }
+                            }
+                        });
+    }
+
+    /**
+     * Reads the current daily step total, computed from midnight of the current day on the device's
+     * current timezone.
+     */
+
+    private void readData() {
+        Fitness.getHistoryClient(getActivity(), GoogleSignIn.getLastSignedInAccount(getActivity()))
+                .readDailyTotal(DataType.TYPE_CALORIES_EXPENDED)
+                .addOnSuccessListener(
+                        new OnSuccessListener<DataSet>() {
+                            @Override
+                            public void onSuccess(DataSet dataSet) {
+                                 total_calories =
+                                        dataSet.isEmpty()
+                                                ? 0
+                                                : dataSet.getDataPoints().get(0).getValue(Field.FIELD_CALORIES).asFloat();
+                                Log.i(TAG, "Total calories: " + total_calories);
+                            }
+                        })
+                .addOnFailureListener(
+                        new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
+                                Log.w(TAG, "There was a problem getting the calories.", e);
+                            }
+                        });
     }
 }
 //

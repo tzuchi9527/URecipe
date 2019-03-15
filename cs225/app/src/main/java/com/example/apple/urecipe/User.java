@@ -1,7 +1,5 @@
 package com.example.apple.urecipe;
 
-import android.content.Context;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -27,7 +25,7 @@ public class User extends Fragment {
         OnClickListener listener =new OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i= new Intent(getActivity(), EditPersonalModel.class);
+                Intent i= new Intent(getActivity(), EditPersonalModelActivity.class);
                 startActivity(i);
             }
         };
