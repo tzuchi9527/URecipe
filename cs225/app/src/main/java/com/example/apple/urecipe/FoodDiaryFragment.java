@@ -8,13 +8,42 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.support.annotation.Nullable;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.TextView;
+
+import com.example.apple.urecipe.db.DatabaseAccess;
 
 public class FoodDiaryFragment extends Fragment {
+
+    private TextView result;
+    private Button query_button;
+    private EditText cal;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_food_diary, container, false);
+        View view = inflater.inflate(R.layout.fragment_food_diary, container, false);
+
+        cal = (EditText) view.findViewById(R.id.cal);
+        query_button = (Button) view.findViewById(R.id.query_button);
+        result = view.findViewById(R.id.result);
+
+
+        query_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                DatabaseAccess databaseAccess = DatabaseAccess.getInstance(getActivity().getApplicationContext());
+                databaseAccess.open();
+
+                int c = Integer.valueOf(cal.getText().toString());
+                String name = databaseAccess.getName(c);
+
+                result.setText(name);
+            }
+        });
+
+        return view;
     }
 }
 //
