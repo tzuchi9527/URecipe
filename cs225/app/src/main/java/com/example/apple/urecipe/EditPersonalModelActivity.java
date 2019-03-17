@@ -59,7 +59,7 @@ public class EditPersonalModelActivity extends AppCompatActivity {
         editor.putString("user_age", age);
         editor.putString("user_weight", weight);
         editor.putString("user_height", height);
-        float bmi = Integer.parseInt(weight)/(Integer.parseInt(height)/100 * Integer.parseInt(height)/100);
+        float bmi = Float.parseFloat(weight)/(Float.parseFloat(height)/100 * Float.parseFloat(height)/100);
         editor.putFloat("user_bmi", bmi);
         editor.commit();
         onBackPressed();
