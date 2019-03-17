@@ -1,5 +1,7 @@
 package com.example.apple.urecipe;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -13,8 +15,6 @@ import android.view.View.OnClickListener;
 import android.content.Intent;
 
 public class UserFragment extends Fragment {
-    TextView user_name, user_age, user_gender, user_height, user_weight;
-    String name = "Annie";
 
 
     @Nullable
@@ -39,11 +39,34 @@ public class UserFragment extends Fragment {
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         // Set values for view here
+        TextView user_name, user_age, user_gender, user_height, user_weight, user_bmi;
+//    String name = "Annie";
+        SharedPreferences sharedPref = getActivity().getSharedPreferences(
+                "com.example.apple.urecipe.user_personal_model", Context.MODE_PRIVATE);
+        String name = sharedPref.getString("user_name", "Please update your info");
+        String gender = sharedPref.getString("user_gender", "Please update your info");
+        String age = sharedPref.getString("user_age", "Please update your info");
+        String weight = sharedPref.getString("user_weight", "0");
+        String height = sharedPref.getString("user_height", "0");
+        float bmi = sharedPref.getFloat("user_bmi", 0);
+
         user_name = (TextView) view.findViewById(R.id.user_name);
+        user_age = (TextView) view.findViewById(R.id.user_age);
+        user_gender = (TextView) view.findViewById(R.id.user_gender);
+        user_height = (TextView) view.findViewById(R.id.user_height);
+        user_weight = (TextView) view.findViewById(R.id.user_weight);
+        user_bmi = (TextView) view.findViewById(R.id.user_bmi);
 
         // update view
         user_name.setText(name);
+        user_age.setText(age);
+        user_gender.setText(gender);
+        user_weight.setText(weight);
+        user_height.setText(height);
+        user_bmi.setText(Float.toString(bmi));
+
     }
+
 }
 //
 ///**
