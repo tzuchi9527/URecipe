@@ -13,14 +13,19 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.apple.urecipe.db.DatabaseAccess;
+import com.example.apple.urecipe.module.Food;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class SearchRecipeActivity extends AppCompatActivity {
     private ListView result;
     private Button query_button;
-    private EditText cal;
+    private EditText food_name;
     public ArrayList<String> result_list = new ArrayList<String>();
+    public List<Food> result_food;
+    final String[] type_of_meal_str = {"breakfast", "lunch", "dinner"};
+    public String type_of_meal_choose;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,7 +38,19 @@ public class SearchRecipeActivity extends AppCompatActivity {
                 android.R.layout.simple_spinner_dropdown_item);
         type_of_meal_spinner.setAdapter(mealList);
 
-        cal = (EditText) findViewById(R.id.cal);
+        type_of_meal_spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                type_of_meal_choose = type_of_meal_str[position];
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
+        food_name = (EditText) findViewById(R.id.cal);
         query_button = (Button) findViewById(R.id.query_button);
         result = (ListView) findViewById(R.id.result_list);
 
@@ -43,9 +60,10 @@ public class SearchRecipeActivity extends AppCompatActivity {
                 DatabaseAccess databaseAccess = DatabaseAccess.getInstance(getApplicationContext());
                 databaseAccess.open();
 
-                int c = Integer.valueOf(cal.getText().toString());
-                String name = databaseAccess.getName(c);
-                result_list.add(name);
+                result_food = databaseAccess.getFoodsByName(food_name.getText().toString());
+                for (Food food: result_food) {
+                    result_list.add(food.getName());
+                }
 
                 ArrayAdapter adapter = new ArrayAdapter<String>(SearchRecipeActivity.this,
                         android.R.layout.simple_list_item_1,
@@ -67,7 +85,7 @@ public class SearchRecipeActivity extends AppCompatActivity {
         @Override
         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
             // Toast 快顯功能 第三個參數 Toast.LENGTH_SHORT 2秒  LENGTH_LONG 5秒
-            Toast.makeText(SearchRecipeActivity.this,"點選第 "+(position +1) +" 個 \n內容："+ result_list.get(position), Toast.LENGTH_SHORT).show();
+            Toast.makeText(SearchRecipeActivity.this,"Store "+ result_list.get(position) + " to the " + type_of_meal_choose + " history.", Toast.LENGTH_SHORT).show();
         }
     };
 

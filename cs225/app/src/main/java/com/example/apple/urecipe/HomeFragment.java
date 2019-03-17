@@ -1,4 +1,5 @@
 package com.example.apple.urecipe;
+import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Color;
 import android.support.annotation.NonNull;
@@ -35,7 +36,7 @@ import com.google.android.gms.tasks.Task;
 public class HomeFragment extends Fragment {
 
     public static final String TAG = "Urecipe";
-    private static final int REQUEST_OAUTH_REQUEST_CODE = 1;
+    private static final int REQUEST_OAUTH_REQUEST_CODE = 0x1001;
     private float expended_calories = 0;
     private int step_count = 0;
 
@@ -115,6 +116,16 @@ public class HomeFragment extends Fragment {
         add_new_diary.setOnClickListener(listener);
 
         return view;
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (resultCode == Activity.RESULT_OK) {
+            if (requestCode == REQUEST_OAUTH_REQUEST_CODE) {
+                subscribeCalories();
+                subscribeStepCount();
+            }
+        }
     }
 
 

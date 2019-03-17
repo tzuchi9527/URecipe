@@ -23,9 +23,9 @@
     <string name="title_activity_edit_personal_model">edit_personal_model</string>
 
     <string-array name="type_of_meal">
-        <item>Breakfast</item>
-        <item>Lunch</item>
-        <item>Dinner</item>
+        <item>breakfast</item>
+        <item>lunch</item>
+        <item>dinner</item>
     </string-array>
 
 </resources>

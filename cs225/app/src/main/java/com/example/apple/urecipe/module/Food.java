@@ -6,9 +6,6 @@ import android.support.annotation.NonNull;
 
 @Entity(tableName = "food_table")
 public class Food {
-    @NonNull
-
-    @PrimaryKey
     private int id;
     private int calories, protein, fat;
     private String name;
@@ -17,9 +14,9 @@ public class Food {
 
     private int priority;
 
-    public Food(@NonNull int id, int calories, int protein, int fat, String name, float rating, boolean breakfast,
-                boolean lunch, boolean dinner, boolean beef, boolean chicken, boolean pork, boolean meat,
-                boolean egg, boolean vegetable, boolean salad, boolean seafood, int priority) {
+    public Food( int id,  String name, float rating, int calories, int protein, int fat,boolean breakfast,
+                 boolean lunch, boolean dinner, boolean beef, boolean chicken, boolean pork, boolean meat,
+                 boolean egg, boolean vegetable, boolean salad, boolean seafood, int priority) {
         this.id = id;
         this.calories = calories;
         this.protein = protein;
@@ -40,12 +37,11 @@ public class Food {
         this.priority = priority;
     }
 
-    @NonNull
     public int getId() {
         return id;
     }
 
-    public void setId(@NonNull int id) {
+    public void setId(int id) {
         this.id = id;
     }
 

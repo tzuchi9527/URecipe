@@ -33,7 +33,7 @@ import com.google.android.gms.tasks.Task;
 public class MainActivity extends AppCompatActivity {
     public static final String TAG = "Urecipe";
     // Identifier to identify the sign in activity.
-    private static final int REQUEST_OAUTH_REQUEST_CODE = 1;
+    private static final int REQUEST_OAUTH_REQUEST_CODE = 0x1001;
 
     private TextView mTextMessage;
 
@@ -119,6 +119,34 @@ public class MainActivity extends AppCompatActivity {
             }
         }
         );
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (resultCode == Activity.RESULT_OK) {
+            if (requestCode == REQUEST_OAUTH_REQUEST_CODE) {
+                subscribe();
+            }
+        }
+    }
+
+    /** Records step data by requesting a subscription to background step data. */
+    public void subscribe() {
+        // To create a subscription, invoke the Recording API. As soon as the subscription is
+        // active, fitness data will start recording.
+        Fitness.getRecordingClient(this, GoogleSignIn.getLastSignedInAccount(this))
+                .subscribe(DataType.TYPE_STEP_COUNT_CUMULATIVE)
+                .addOnCompleteListener(
+                        new OnCompleteListener<Void>() {
+                            @Override
+                            public void onComplete(@NonNull Task<Void> task) {
+                                if (task.isSuccessful()) {
+                                    Log.i(TAG, "Successfully subscribed!");
+                                } else {
+                                    Log.w(TAG, "There was a problem subscribing.", task.getException());
+                                }
+                            }
+                        });
     }
 
 

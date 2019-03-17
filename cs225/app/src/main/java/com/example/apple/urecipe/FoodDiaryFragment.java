@@ -37,9 +37,9 @@ public class FoodDiaryFragment extends Fragment {
                 databaseAccess.open();
 
                 int c = Integer.valueOf(cal.getText().toString());
-                String name = databaseAccess.getName(c);
+                // String name = databaseAccess.getName(c);
 
-                result.setText(name);
+                result.setText("result");
             }
         });
 

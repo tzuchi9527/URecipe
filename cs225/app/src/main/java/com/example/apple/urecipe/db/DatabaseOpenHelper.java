@@ -13,5 +13,4 @@ public class DatabaseOpenHelper extends SQLiteAssetHelper {
         super(context,DATABASE_NAME,null,DATABASE_VERSION);
     }
 
-
 }
