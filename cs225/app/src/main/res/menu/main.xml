@@ -27,6 +27,11 @@ limitations under the License.
         android:orderInCategory="100"
         app:showAsAction="never" />
 
+    <item android:id="@+id/action_read_step_data"
+        android:title="Read Step Count"
+        android:orderInCategory="100"
+        app:showAsAction="never" />
+
     <item android:id="@+id/action_personal_model"
         android:title="Personal Model"
         android:orderInCategory="100"
