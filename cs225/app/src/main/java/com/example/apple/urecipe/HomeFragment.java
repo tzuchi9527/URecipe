@@ -47,6 +47,7 @@ public class HomeFragment extends Fragment {
 
     private TextView expended_calories_view;
     private TextView step_count_view;
+    private TextView user_bmr_view;
 
     private Button add_new_diary;
 
@@ -88,6 +89,8 @@ public class HomeFragment extends Fragment {
         step_count_view.setText("Step Count: " + String.valueOf(step_count));
         expended_calories_view = view.findViewById(R.id.expanded_calories);
         expended_calories_view.setText("Expended Calories: " + String.valueOf(expended_calories));
+        user_bmr_view = view.findViewById(R.id.user_bmr);
+        user_bmr_view.setText("BMR: " + String.valueOf(user_bmr));
 
         /*
         cal = (EditText) view.findViewById(R.id.cal_breakfast);
