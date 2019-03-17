@@ -1,6 +1,7 @@
 package com.example.apple.urecipe;
 import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -39,7 +40,7 @@ public class HomeFragment extends Fragment {
     private static final int REQUEST_OAUTH_REQUEST_CODE = 0x1001;
     private float expended_calories = 0;
     private int step_count = 0;
-
+    private float user_bmr = 0.0f;
     private TextView result;
     private Button query_button;
     private EditText cal;
@@ -78,6 +79,10 @@ public class HomeFragment extends Fragment {
 
         readCaloriesData();
         readStepCountData();
+
+        SharedPreferences sharedPref = getActivity().getSharedPreferences(
+                "com.example.apple.urecipe.user_personal_model", Context.MODE_PRIVATE);
+        user_bmr = sharedPref.getFloat("user_bmr", 0.0f);
 
         step_count_view = view.findViewById(R.id.step_count);
         step_count_view.setText("Step Count: " + String.valueOf(step_count));

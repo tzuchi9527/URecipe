@@ -61,6 +61,15 @@ public class EditPersonalModelActivity extends AppCompatActivity {
         editor.putString("user_height", height);
         float bmi = Float.parseFloat(weight)/(Float.parseFloat(height)/100 * Float.parseFloat(height)/100);
         editor.putFloat("user_bmi", bmi);
+        float bmr ;
+        if(gender.toLowerCase().equals("female")){
+            bmr = 655 + (9.6f * Float.parseFloat(weight)) + 1.8f * (Float.parseFloat(height)) - (4.7f*(Float.parseFloat(age)));
+        }else{
+            bmr = 66 + (13.7f * Float.parseFloat(weight)) + 5 * (Float.parseFloat(height)) - (6.8f*(Float.parseFloat(age)));
+
+        }
+        editor.putFloat("user_bmr", bmr);
+
         editor.commit();
         onBackPressed();
 
