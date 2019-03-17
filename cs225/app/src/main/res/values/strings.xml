@@ -22,4 +22,6 @@
     <string name="user_weight">user_weight</string>
     <string name="user_edit">EDIT</string>
     <string name="title_activity_edit_personal_model">edit_personal_model</string>
+    <string name="save_edit">SAVE</string>
+    <string name="user_bmi">user_bmi</string>
 </resources>
