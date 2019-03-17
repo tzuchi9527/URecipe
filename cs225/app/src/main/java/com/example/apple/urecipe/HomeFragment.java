@@ -1,4 +1,5 @@
 package com.example.apple.urecipe;
+import android.content.Intent;
 import android.graphics.Color;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -45,6 +46,8 @@ public class HomeFragment extends Fragment {
     private TextView expended_calories_view;
     private TextView step_count_view;
 
+    private Button add_new_diary;
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -76,14 +79,14 @@ public class HomeFragment extends Fragment {
         readStepCountData();
 
         step_count_view = view.findViewById(R.id.step_count);
-        step_count_view.setText(String.valueOf(step_count));
+        step_count_view.setText("Step Count: " + String.valueOf(step_count));
         expended_calories_view = view.findViewById(R.id.expanded_calories);
-        expended_calories_view.setText(String.valueOf(expended_calories));
+        expended_calories_view.setText("Expended Calories: " + String.valueOf(expended_calories));
 
+        /*
         cal = (EditText) view.findViewById(R.id.cal_breakfast);
         query_button = (Button) view.findViewById(R.id.query_button_breakfast);
         result = view.findViewById(R.id.result_breakfast);
-
 
         query_button.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -97,6 +100,19 @@ public class HomeFragment extends Fragment {
                 result.setText(name);
             }
         });
+        */
+
+        add_new_diary = (Button) view.findViewById(R.id.add_new_diary);
+
+        View.OnClickListener listener =new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent= new Intent(getActivity(), SearchRecipeActivity.class);
+                startActivity(intent);
+            }
+        };
+
+        add_new_diary.setOnClickListener(listener);
 
         return view;
     }

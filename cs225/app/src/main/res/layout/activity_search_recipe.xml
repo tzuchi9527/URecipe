@@ -9,20 +9,26 @@
     android:orientation="vertical"
     tools:context=".SearchRecipeActivity">
 
+    <Spinner
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/type_of_meal"/>
 
     <EditText
         android:id="@+id/cal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
+
     <Button
         android:id="@+id/query_button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text = "Query"/>
-    <TextView
-        android:id="@+id/result"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
 
+    <ListView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentBottom="true"
+        android:id="@+id/result_list" />
 
 </LinearLayout>

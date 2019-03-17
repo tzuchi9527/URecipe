@@ -21,4 +21,11 @@
     <string name="user_weight">user_weight</string>
     <string name="user_edit">EDIT</string>
     <string name="title_activity_edit_personal_model">edit_personal_model</string>
+
+    <string-array name="type_of_meal">
+        <item>Breakfast</item>
+        <item>Lunch</item>
+        <item>Dinner</item>
+    </string-array>
+
 </resources>
