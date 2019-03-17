@@ -3,12 +3,33 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".FoodDiary">
+    tools:context=".FoodDiaryFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:layout_height="match_parent">
+
+        <EditText
+            android:id="@+id/cal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/activity_horizontal_margin" />
+
+        <Button
+            android:id="@+id/query_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/query_margin"
+            android:text="Query" />
+
+        <TextView
+            android:id="@+id/result"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true" />
+
+    </RelativeLayout>
+
 
 </FrameLayout>

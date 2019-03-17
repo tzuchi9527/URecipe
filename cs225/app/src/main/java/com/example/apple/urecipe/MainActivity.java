@@ -55,33 +55,16 @@ public class MainActivity extends AppCompatActivity {
     };
 
 
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
         // This method sets up our custom logger, which will print all log messages to the device
         // screen, as well as to adb logcat.
         /*
         initializeLogging();
 
-        FitnessOptions fitnessOptions =
-                FitnessOptions.builder()
-                        // .addDataType(DataType.TYPE_STEP_COUNT_CUMULATIVE)
-                        // .addDataType(DataType.TYPE_STEP_COUNT_DELTA)
-                        .addDataType(DataType.TYPE_CALORIES_EXPENDED)
-                        .addDataType(DataType.AGGREGATE_CALORIES_EXPENDED)
-                        .build();
-        if (!GoogleSignIn.hasPermissions(GoogleSignIn.getLastSignedInAccount(this), fitnessOptions)) {
-            GoogleSignIn.requestPermissions(
-                    this,
-                    REQUEST_OAUTH_REQUEST_CODE,
-                    GoogleSignIn.getLastSignedInAccount(this),
-                    fitnessOptions);
-        } else {
-            subscribe();
-        }
         */
 
         mTextMessage = (TextView) findViewById(R.id.message);
@@ -139,86 +122,11 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (resultCode == Activity.RESULT_OK) {
-            if (requestCode == REQUEST_OAUTH_REQUEST_CODE) {
-                subscribe();
-            }
-        }
-    }
-
-    /** Records step data by requesting a subscription to background step data. */
-    public void subscribe() {
-        // To create a subscription, invoke the Recording API. As soon as the subscription is
-        // active, fitness data will start recording.
-        Fitness.getRecordingClient(this, GoogleSignIn.getLastSignedInAccount(this))
-                .subscribe(DataType.TYPE_CALORIES_EXPENDED)
-                .addOnCompleteListener(
-                        new OnCompleteListener<Void>() {
-                            @Override
-                            public void onComplete(@NonNull Task<Void> task) {
-                                if (task.isSuccessful()) {
-                                    Log.i(TAG, "Successfully subscribed!");
-                                } else {
-                                    Log.w(TAG, "There was a problem subscribing.", task.getException());
-                                }
-                            }
-                        });
-    }
-
-    /**
-     * Reads the current daily step total, computed from midnight of the current day on the device's
-     * current timezone.
-     */
-
-    private void readData() {
-        Fitness.getHistoryClient(this, GoogleSignIn.getLastSignedInAccount(this))
-                .readDailyTotal(DataType.TYPE_CALORIES_EXPENDED)
-                .addOnSuccessListener(
-                        new OnSuccessListener<DataSet>() {
-                            @Override
-                            public void onSuccess(DataSet dataSet) {
-                                float total =
-                                        dataSet.isEmpty()
-                                                ? 0
-                                                : dataSet.getDataPoints().get(0).getValue(Field.FIELD_CALORIES).asFloat();
-                                Log.i(TAG, "Total calories: " + total);
-                            }
-                        })
-                .addOnFailureListener(
-                        new OnFailureListener() {
-                            @Override
-                            public void onFailure(@NonNull Exception e) {
-                                Log.w(TAG, "There was a problem getting the calories.", e);
-                            }
-                        });
-    }
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the main; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.main, menu);
         return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        int id = item.getItemId();
-        if (id == R.id.action_read_data) {
-            readData();
-            return true;
-        }
-//        else if (id == R.id.action_personal_model){
-//            Intent intent = new Intent(this, PersonalModel.class);
-//            startActivity(intent);
-//        }
-//        else if (id == R.id.action_food_record){
-//            Intent intent = new Intent(this, FoodRecord.class);
-//            startActivity(intent);
-//        }
-        return super.onOptionsItemSelected(item);
     }
 
     /** Initializes a custom log class that outputs both to in-app targets and logcat. */
