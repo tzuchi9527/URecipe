@@ -1,5 +1,8 @@
 package com.example.apple.urecipe;
 
+import android.app.Notification;
+import android.app.NotificationManager;
+import android.graphics.BitmapFactory;
 import android.view.View;
 import android.app.Activity;
 import android.content.Intent;
@@ -119,7 +122,9 @@ public class MainActivity extends AppCompatActivity {
             }
         }
         );
+
     }
+
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
