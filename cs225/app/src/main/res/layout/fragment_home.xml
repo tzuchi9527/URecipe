@@ -43,9 +43,15 @@
             android:layout_height="wrap_content" />
 
         <TextView
+            android:id="@+id/health"
+            android:layout_width="match_parent"
+            android:layout_below="@+id/user_bmr"
+            android:layout_height="wrap_content" />
+
+        <TextView
             android:id="@+id/breakfast"
             android:text="Breakfast"
-            android:layout_below="@+id/user_bmr"
+            android:layout_below="@+id/health"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             />

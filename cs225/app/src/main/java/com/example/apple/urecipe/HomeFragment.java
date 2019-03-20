@@ -22,6 +22,7 @@ import com.example.apple.urecipe.common.logger.LogView;
 import com.example.apple.urecipe.common.logger.LogWrapper;
 import com.example.apple.urecipe.common.logger.MessageOnlyLogFilter;
 import com.example.apple.urecipe.db.DatabaseAccess;
+import com.example.apple.urecipe.db.Recommendation;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.fitness.Fitness;
 import com.google.android.gms.fitness.FitnessOptions;
@@ -62,6 +63,7 @@ public class HomeFragment extends Fragment {
     private TextView user_bmr_view;
     private TextView week_step_count_view;
     private TextView week_calories_view;
+    private TextView health_view;
     private TextView breakfast_view;
     private TextView lunch_view;
     private TextView dinner_view;
@@ -107,8 +109,12 @@ public class HomeFragment extends Fragment {
         SharedPreferences sharedPref = HomeFragment.this.getActivity().getSharedPreferences(
                 "com.example.apple.urecipe.user_personal_model", Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPref.edit();
-        editor.putFloat("dialy_calories", expended_calories);
         user_bmr = sharedPref.getFloat("user_bmr", 0.0f);
+        editor.putFloat("user_expendedCal", expended_calories);
+
+        Recommendation recommend = new Recommendation(getContext());
+
+        String health = recommend.getHealthState();
 
         DatabaseAccess databaseAccess = DatabaseAccess.getInstance(getContext());
         databaseAccess.open();
@@ -123,13 +129,15 @@ public class HomeFragment extends Fragment {
         week_calories_view.setText("Week Calories: " + String.valueOf(week_expended_calories));
         user_bmr_view = view.findViewById(R.id.user_bmr);
         user_bmr_view.setText("BMR: " + String.valueOf(user_bmr));
+        health_view = view.findViewById(R.id.health);
+        health_view.setText("Health State: " + health);
 
         breakfast_view = view.findViewById(R.id.result_breakfast);
-        breakfast_view.setText(databaseAccess.getFoodNameHistory(0, "breakfast"));
+        breakfast_view.setText(databaseAccess.getFoodHistory(0, "breakfast").getName());
         lunch_view = view.findViewById(R.id.result_lunch);
-        lunch_view.setText(databaseAccess.getFoodNameHistory(0, "lunch"));
+        lunch_view.setText(databaseAccess.getFoodHistory(0, "lunch").getName());
         dinner_view = view.findViewById(R.id.result_dinner);
-        dinner_view.setText(databaseAccess.getFoodNameHistory(0, "dinner"));
+        dinner_view.setText(databaseAccess.getFoodHistory(0, "dinner").getName());
         databaseAccess.close();
 
         add_new_diary = (Button) view.findViewById(R.id.add_new_diary);

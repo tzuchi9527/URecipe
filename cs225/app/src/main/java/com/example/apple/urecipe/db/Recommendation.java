@@ -2,23 +2,26 @@ package com.example.apple.urecipe.db;
 
 import android.content.Context;
 import android.content.SharedPreferences;
-
+import android.util.Log;
 
 import com.example.apple.urecipe.module.Food;
+
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
 public class Recommendation {
 
+    public static final String TAG = "Urecipe";
 
     Context c;
     private DatabaseAccess databaseAccess;
     SharedPreferences sharedPrefs;
 
     //TEE = Total Energy Expenditure, PAL = Physical Activity Ratio
-    private float BMR, TEE, PAL, expendedCal, intookCal, availCal;
+    public float BMR, TEE, PAL, expendedCal, intookCal, availCal;
     private String pref;
-    public List<Food> recmdFoods;
+    public List<Food> recmdFoods = new ArrayList<>();
 
     public Recommendation(Context context){
 
@@ -33,14 +36,14 @@ public class Recommendation {
     public void getSharedPrefs(Context context){
 
         sharedPrefs = context.getSharedPreferences("com.example.apple.urecipe.user_personal_model", Context.MODE_PRIVATE);
-        sharedPrefs.getFloat("user_bmr", BMR);
-        sharedPrefs.getFloat("user_expendedCal", expendedCal);
+        BMR = sharedPrefs.getFloat("user_bmr", 0.0f);
+        expendedCal = sharedPrefs.getFloat("user_expendedCal", 0.0f);
         TEE = BMR + expendedCal;
         PAL = TEE/BMR;
     }
 
     public void getFoodData(){
-        intookCal = databaseAccess.getHistoryByOption(0, "calories");
+        intookCal = databaseAccess.getHistoryByOption("calories", 0);
         availCal = BMR + expendedCal - intookCal;
     }
 
@@ -81,23 +84,28 @@ public class Recommendation {
         Random rand = new Random();
         int p1, p2;
 
+        Log.i(TAG, "BMR: " + String.valueOf(BMR));
+        Log.i(TAG, "expendedCal: " + String.valueOf(expendedCal));
+        Log.i(TAG, "availCal: " + String.valueOf(availCal));
+
         recmdFoods.add(databaseAccess.getFoodsByNutri("calories", 1,
                 (int) availCal).get(rand.nextInt(5)));
-        recmdFoods.add(databaseAccess.getFoodsByNutri("calories", 1,
-                (int) availCal).get(rand.nextInt(5)));
-        recmdFoods.add(databaseAccess.getFoodsByNutri("calories", 1,
-                (int) availCal).get(rand.nextInt(5)));
-        //p1 = rand.nextInt(10);
-        //recmdFoods.add(databaseAccess.getFoodsByRecmd(pref, "calories", 1,
-                //(int) availCal).get(p1));
-        //p2 = rand.nextInt(10);
-        //while (p2 == p1) {
-            //p2 = rand.nextInt(10);
-        //}
-        //recmdFoods.add(databaseAccess.getFoodsByRecmd(pref, "calories", 1,
-                //(int) availCal).get(p2));
+
+        p1 = rand.nextInt(10);
+        recmdFoods.add(databaseAccess.getFoodsByRecmd(pref, "calories", 1,
+                (int) availCal).get(p1));
+        p2 = rand.nextInt(10);
+        while (p2 == p1) {
+            p2 = rand.nextInt(10);
+        }
+        recmdFoods.add(databaseAccess.getFoodsByRecmd(pref, "calories", 1,
+                (int) availCal).get(p2));
 
         return recmdFoods;
+    }
+
+    public String getPref(){
+        return pref;
     }
 }
 

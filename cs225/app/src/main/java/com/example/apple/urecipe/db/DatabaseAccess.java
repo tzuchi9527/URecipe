@@ -82,18 +82,15 @@ public class DatabaseAccess {
         c.close();
     }
 
-    public String getFoodNameHistory(int dateBefore, String F_type){
+    public Food getFoodHistory(int dateBefore, String F_type){
         // dateBefore:{0:today,1:yesterday,2:the day before yesterday...}
         // Ftype: {"breakfast","lunch","dinner"}
-        c = db.rawQuery("SELECT name " +
+        c = db.rawQuery("SELECT Food_Nutri.Rid, name, rating, calories,protein,fat,breakfast,lunch,dinner,beef,chicken,pork,meat,egg,vegetable,salad,seafood " +
                 "FROM UserIntake, Food_Nutri " +
                 "WHERE UserIntake.Fid=Food_Nutri.Rid AND " +
                 "Fdate=date('now','-"+Integer.toString(dateBefore)+" days','localtime') AND Ftype='"+
                 F_type+"'",new String[]{});
-        if (c.moveToNext())
-            return c.getString(0);
-        else
-            return "";
+        return readCursor(c).get(0);
     }
 
 
@@ -115,9 +112,6 @@ public class DatabaseAccess {
 
         return result;
     }
-
-
-
 
 
     public List<Food> getFoodsByNutri(String option, Integer min, Integer max){
@@ -188,17 +182,17 @@ public class DatabaseAccess {
             calories = c.getInt(3);
             protein = c.getInt(4);
             fat = c.getInt(5);
-            breakfast = intToBool(c.getInt(6));
-            lunch = intToBool(c.getInt(7));
-            dinner = intToBool(c.getInt(8));
-            beef = intToBool(c.getInt(9));
-            chicken = intToBool(c.getInt(10));
-            pork = intToBool(c.getInt(11));
-            meat = intToBool(c.getInt(12));
-            egg = intToBool(c.getInt(13));
-            vegetable = intToBool(c.getInt(14));
-            salad = intToBool(c.getInt(15));
-            seafood = intToBool(c.getInt(16));
+            breakfast = bolstrTobol(c.getString(6));
+            lunch = bolstrTobol(c.getString(7));
+            dinner = bolstrTobol(c.getString(8));
+            beef = bolstrTobol(c.getString(9));
+            chicken = bolstrTobol(c.getString(10));
+            pork = bolstrTobol(c.getString(11));
+            meat = bolstrTobol(c.getString(12));
+            egg = bolstrTobol(c.getString(13));
+            vegetable = bolstrTobol(c.getString(14));
+            salad = bolstrTobol(c.getString(15));
+            seafood = bolstrTobol(c.getString(16));
 
             Food newfood = new Food(id,name,rating,calories,protein,fat,breakfast,lunch,dinner,
                     beef, chicken, pork, meat, egg, vegetable, salad, seafood,0);
@@ -210,14 +204,14 @@ public class DatabaseAccess {
     }
 
     private int bolstrToint(String s){
-        if (s=="True")
+        if (s.equals("True"))
             return 1;
         else
             return 0;
     }
 
-    private boolean intToBool (int i ){
-        if (i==1)
+    private boolean bolstrTobol (String s){
+        if (s.equals("True"))
             return true;
         else
             return false;
