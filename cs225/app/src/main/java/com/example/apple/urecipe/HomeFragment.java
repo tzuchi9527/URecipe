@@ -103,6 +103,11 @@ public class HomeFragment extends Fragment {
         readStepCountHistoryData();
         readCaloriesHistoryData();
 
+        SharedPreferences sharedPref_calories = HomeFragment.this.getActivity().getSharedPreferences(
+                "com.example.apple.urecipe.user_personal_model", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor_calories = sharedPref_calories.edit();
+        editor_calories.putFloat("dialy_calories", expended_calories);
+
         step_count_view = view.findViewById(R.id.step_count);
         step_count_view.setText("Step Count: " + String.valueOf(step_count));
         week_step_count_view = view.findViewById(R.id.week_step_count);
