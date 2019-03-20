@@ -13,11 +13,11 @@ MainActivity:
 HomeFragment:
 - Read the step count and calories, extract daily and within one week for personal model
 - Show the recipe that user have for each day
-- User can add new recipe if he/she eat new food by "ADD NEW DIARY" button, it will run the SearchRecipeActivity
+- User can record waht he/she eat by "ADD NEW DIARY" button, it will run the SearchRecipeActivity
 
 UserFragment:
-- Record user profile, including name, gender, age, height, weight, and BMI, for personnal model
-- Use SharedPreferences to store
+- Record user profile, including name, gender, age, height, weight, and BMI, for personal model
+- Use SharedPreferences to store data
 
 FoodDiaryFragment:
 
