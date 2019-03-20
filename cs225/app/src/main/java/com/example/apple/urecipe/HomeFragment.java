@@ -65,8 +65,6 @@ public class HomeFragment extends Fragment {
 
     private Button add_new_diary;
 
-    public List<DataSet> week_calories_list;
-    public List<DataSet> week_step_count_list;
     public int week_step_count = 0;
     public float week_expended_calories = 0;
 
@@ -103,11 +101,12 @@ public class HomeFragment extends Fragment {
         readStepCountHistoryData();
         readCaloriesHistoryData();
 
-        SharedPreferences sharedPref_calories = HomeFragment.this.getActivity().getSharedPreferences(
+        SharedPreferences sharedPref = HomeFragment.this.getActivity().getSharedPreferences(
                 "com.example.apple.urecipe.user_personal_model", Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor_calories = sharedPref_calories.edit();
-        editor_calories.putFloat("dialy_calories", expended_calories);
-        
+        SharedPreferences.Editor editor = sharedPref.edit();
+        editor.putFloat("dialy_calories", expended_calories);
+        user_bmr = sharedPref.getFloat("user_bmr", 0.0f);
+
         step_count_view = view.findViewById(R.id.step_count);
         step_count_view.setText("Step Count: " + String.valueOf(step_count));
         week_step_count_view = view.findViewById(R.id.week_step_count);

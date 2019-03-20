@@ -70,6 +70,25 @@ public class MainActivity extends AppCompatActivity {
         */
 
 
+        FitnessOptions fitnessOptions =
+                FitnessOptions.builder()
+                        .addDataType(DataType.TYPE_STEP_COUNT_CUMULATIVE)
+                        .addDataType(DataType.TYPE_STEP_COUNT_DELTA)
+                        .addDataType(DataType.TYPE_CALORIES_EXPENDED)
+                        .addDataType(DataType.AGGREGATE_CALORIES_EXPENDED)
+                        .build();
+
+        if (!GoogleSignIn.hasPermissions(GoogleSignIn.getLastSignedInAccount(this), fitnessOptions)) {
+            GoogleSignIn.requestPermissions(
+                    this,
+                    REQUEST_OAUTH_REQUEST_CODE,
+                    GoogleSignIn.getLastSignedInAccount(this),
+                    fitnessOptions);
+        } else {
+            subscribeCalories();
+            subscribeStepCount();
+        }
+
 
         mTextMessage = (TextView) findViewById(R.id.message);
         viewPager = (ViewPager) findViewById(R.id.viewpager);
@@ -161,6 +180,44 @@ public class MainActivity extends AppCompatActivity {
         // Inflate the main; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.main, menu);
         return true;
+    }
+
+    /** Records step data by requesting a subscription to background step data. */
+    public void subscribeCalories() {
+        // To create a subscription, invoke the Recording API. As soon as the subscription is
+        // active, fitness data will start recording.
+        Fitness.getRecordingClient(this, GoogleSignIn.getLastSignedInAccount(this))
+                .subscribe(DataType.TYPE_CALORIES_EXPENDED)
+                .addOnCompleteListener(
+                        new OnCompleteListener<Void>() {
+                            @Override
+                            public void onComplete(@NonNull Task<Void> task) {
+                                if (task.isSuccessful()) {
+                                    android.util.Log.i(TAG, "Successfully subscribed!");
+                                } else {
+                                    android.util.Log.w(TAG, "There was a problem subscribing.", task.getException());
+                                }
+                            }
+                        });
+    }
+
+    /** Records step data by requesting a subscription to background step data. */
+    public void subscribeStepCount() {
+        // To create a subscription, invoke the Recording API. As soon as the subscription is
+        // active, fitness data will start recording.
+        Fitness.getRecordingClient(this, GoogleSignIn.getLastSignedInAccount(this))
+                .subscribe(DataType.TYPE_STEP_COUNT_CUMULATIVE)
+                .addOnCompleteListener(
+                        new OnCompleteListener<Void>() {
+                            @Override
+                            public void onComplete(@NonNull Task<Void> task) {
+                                if (task.isSuccessful()) {
+                                    android.util.Log.i(TAG, "Successfully subscribed!");
+                                } else {
+                                    android.util.Log.w(TAG, "There was a problem subscribing.", task.getException());
+                                }
+                            }
+                        });
     }
 
     /** Initializes a custom log class that outputs both to in-app targets and logcat. */
