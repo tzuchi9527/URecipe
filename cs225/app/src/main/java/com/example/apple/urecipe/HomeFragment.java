@@ -107,7 +107,7 @@ public class HomeFragment extends Fragment {
                 "com.example.apple.urecipe.user_personal_model", Context.MODE_PRIVATE);
         SharedPreferences.Editor editor_calories = sharedPref_calories.edit();
         editor_calories.putFloat("dialy_calories", expended_calories);
-
+        
         step_count_view = view.findViewById(R.id.step_count);
         step_count_view.setText("Step Count: " + String.valueOf(step_count));
         week_step_count_view = view.findViewById(R.id.week_step_count);
@@ -115,28 +115,9 @@ public class HomeFragment extends Fragment {
         expended_calories_view = view.findViewById(R.id.expanded_calories);
         expended_calories_view.setText("Expended Calories: " + String.valueOf(expended_calories));
         week_calories_view = view.findViewById(R.id.week_calories);
-        week_calories_view.setText("Week Calories: 0" );
+        week_calories_view.setText("Week Calories: " + String.valueOf(week_expended_calories));
         user_bmr_view = view.findViewById(R.id.user_bmr);
         user_bmr_view.setText("BMR: " + String.valueOf(user_bmr));
-
-        /*
-        cal = (EditText) view.findViewById(R.id.cal_breakfast);
-        query_button = (Button) view.findViewById(R.id.query_button_breakfast);
-        result = view.findViewById(R.id.result_breakfast);
-
-        query_button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                DatabaseAccess databaseAccess = DatabaseAccess.getInstance(getActivity().getApplicationContext());
-                databaseAccess.open();
-
-                int c = Integer.valueOf(cal.getText().toString());
-                String name = databaseAccess.getName(c);
-
-                result.setText(name);
-            }
-        });
-        */
 
         add_new_diary = (Button) view.findViewById(R.id.add_new_diary);
 
@@ -377,7 +358,7 @@ public class HomeFragment extends Fragment {
                 }
             }
         }
-        Log.i(TAG, "week_calories: " + String.valueOf(week_step_count));
+        Log.i(TAG, "week_calories: " + String.valueOf(week_expended_calories));
     }
 
     public void cumulateStepCount(DataReadResponse dataReadResult) {
