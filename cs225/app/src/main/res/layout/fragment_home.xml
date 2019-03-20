@@ -20,8 +20,9 @@
         <TextView
             android:id="@+id/expanded_calories"
             android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:layout_below="@+id/step_count"
-            android:layout_height="wrap_content" />
+            android:textSize="30sp" />
 
         <TextView
             android:id="@+id/user_bmr"

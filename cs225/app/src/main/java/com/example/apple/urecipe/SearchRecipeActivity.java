@@ -85,9 +85,17 @@ public class SearchRecipeActivity extends AppCompatActivity {
         @Override
         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
             // Toast 快顯功能 第三個參數 Toast.LENGTH_SHORT 2秒  LENGTH_LONG 5秒
+
+
+            onBackPressed();
             Toast.makeText(SearchRecipeActivity.this,"Store "+ result_list.get(position) + " to the " + type_of_meal_choose + " history.", Toast.LENGTH_SHORT).show();
         }
-    };
 
+    };
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        finish();
+    }
 
 }

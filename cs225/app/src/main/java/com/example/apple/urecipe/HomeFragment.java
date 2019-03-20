@@ -88,9 +88,9 @@ public class HomeFragment extends Fragment {
         step_count_view = view.findViewById(R.id.step_count);
         step_count_view.setText("Step Count: " + String.valueOf(step_count));
         expended_calories_view = view.findViewById(R.id.expanded_calories);
-        expended_calories_view.setText("Expended Calories: " + String.valueOf(expended_calories));
-        user_bmr_view = view.findViewById(R.id.user_bmr);
-        user_bmr_view.setText("BMR: " + String.valueOf(user_bmr));
+        expended_calories_view.setText(String.valueOf(expended_calories) + " Calories Needed");
+//        user_bmr_view = view.findViewById(R.id.user_bmr);
+//        user_bmr_view.setText("BMR: " + String.valueOf(user_bmr));
 
         /*
         cal = (EditText) view.findViewById(R.id.cal_breakfast);
