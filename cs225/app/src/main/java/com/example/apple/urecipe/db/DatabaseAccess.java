@@ -82,7 +82,7 @@ public class DatabaseAccess {
         c.close();
     }
 
-    public Food getFoodHistory(int dateBefore, String F_type){
+    public String getFoodHistory(int dateBefore, String F_type){
         // dateBefore:{0:today,1:yesterday,2:the day before yesterday...}
         // Ftype: {"breakfast","lunch","dinner"}
         c = db.rawQuery("SELECT Food_Nutri.Rid, name, rating, calories,protein,fat,breakfast,lunch,dinner,beef,chicken,pork,meat,egg,vegetable,salad,seafood " +
@@ -90,8 +90,27 @@ public class DatabaseAccess {
                 "WHERE UserIntake.Fid=Food_Nutri.Rid AND " +
                 "Fdate=date('now','-"+Integer.toString(dateBefore)+" days','localtime') AND Ftype='"+
                 F_type+"'",new String[]{});
-        return readCursor(c).get(0);
+
+        if (c.moveToNext())
+            return readCursor(c).get(0).getName();
+        else
+            return "";
     }
+
+    public String getFoodNameHistory(int dateBefore, String F_type){
+        // dateBefore:{0:today,1:yesterday,2:the day before yesterday...}
+        // Ftype: {"breakfast","lunch","dinner"}
+        c = db.rawQuery("SELECT name " +
+                "FROM UserIntake, Food_Nutri " +
+                "WHERE UserIntake.Fid=Food_Nutri.Rid AND " +
+                "Fdate=date('now','-"+Integer.toString(dateBefore)+" days','localtime') AND Ftype='"+
+                F_type+"'",new String[]{});
+        if (c.moveToNext())
+            return c.getString(0);
+        else
+            return "";
+    }
+
 
 
     public List<Food> getFoodsByName(String n){

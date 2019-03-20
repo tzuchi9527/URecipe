@@ -133,11 +133,11 @@ public class HomeFragment extends Fragment {
         health_view.setText("Health State: " + health);
 
         breakfast_view = view.findViewById(R.id.result_breakfast);
-        breakfast_view.setText(databaseAccess.getFoodHistory(0, "breakfast").getName());
+        breakfast_view.setText(databaseAccess.getFoodNameHistory(0, "breakfast"));
         lunch_view = view.findViewById(R.id.result_lunch);
-        lunch_view.setText(databaseAccess.getFoodHistory(0, "lunch").getName());
+        lunch_view.setText(databaseAccess.getFoodNameHistory(0, "lunch"));
         dinner_view = view.findViewById(R.id.result_dinner);
-        dinner_view.setText(databaseAccess.getFoodHistory(0, "dinner").getName());
+        dinner_view.setText(databaseAccess.getFoodNameHistory(0, "dinner"));
         databaseAccess.close();
 
         add_new_diary = (Button) view.findViewById(R.id.add_new_diary);
