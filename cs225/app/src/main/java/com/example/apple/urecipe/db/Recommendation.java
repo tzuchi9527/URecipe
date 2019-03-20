@@ -83,19 +83,15 @@ public class Recommendation {
 
         recmdFoods.add(databaseAccess.getFoodsByNutri("calories", 1,
                 (int) availCal).get(rand.nextInt(5)));
-        recmdFoods.add(databaseAccess.getFoodsByNutri("calories", 1,
-                (int) availCal).get(rand.nextInt(5)));
-        recmdFoods.add(databaseAccess.getFoodsByNutri("calories", 1,
-                (int) availCal).get(rand.nextInt(5)));
-        //p1 = rand.nextInt(10);
-        //recmdFoods.add(databaseAccess.getFoodsByRecmd(pref, "calories", 1,
-                //(int) availCal).get(p1));
-        //p2 = rand.nextInt(10);
-        //while (p2 == p1) {
-            //p2 = rand.nextInt(10);
-        //}
-        //recmdFoods.add(databaseAccess.getFoodsByRecmd(pref, "calories", 1,
-                //(int) availCal).get(p2));
+        p1 = rand.nextInt(10);
+        recmdFoods.add(databaseAccess.getFoodsByRecmd(pref, "calories", 1,
+                (int) availCal).get(p1));
+        p2 = rand.nextInt(10);
+        while (p2 == p1) {
+            p2 = rand.nextInt(10);
+        }
+        recmdFoods.add(databaseAccess.getFoodsByRecmd(pref, "calories", 1,
+                (int) availCal).get(p2));
 
         return recmdFoods;
     }
