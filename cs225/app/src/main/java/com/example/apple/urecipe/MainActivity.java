@@ -67,8 +67,9 @@ public class MainActivity extends AppCompatActivity {
         // screen, as well as to adb logcat.
         /*
         initializeLogging();
-
         */
+
+
 
         mTextMessage = (TextView) findViewById(R.id.message);
         viewPager = (ViewPager) findViewById(R.id.viewpager);

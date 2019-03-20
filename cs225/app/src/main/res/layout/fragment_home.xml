@@ -16,6 +16,12 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
 
+        <TextView
+            android:id="@+id/week_step_count"
+            android:layout_below="@+id/step_count"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
 
         <TextView
             android:id="@+id/expanded_calories"
@@ -24,10 +30,17 @@
             android:layout_below="@+id/step_count"
             android:textSize="30sp" />
 
+
+        <TextView
+            android:id="@+id/week_calories"
+            android:layout_width="match_parent"
+            android:layout_below="@+id/expanded_calories"
+            android:layout_height="wrap_content" />
+
         <TextView
             android:id="@+id/user_bmr"
             android:layout_width="match_parent"
-            android:layout_below="@+id/expanded_calories"
+            android:layout_below="@+id/week_calories"
             android:layout_height="wrap_content" />
 
         <TextView
