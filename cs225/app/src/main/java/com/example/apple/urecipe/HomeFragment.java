@@ -62,11 +62,12 @@ public class HomeFragment extends Fragment {
     private TextView user_bmr_view;
     private TextView week_step_count_view;
     private TextView week_calories_view;
+    private TextView breakfast_view;
+    private TextView lunch_view;
+    private TextView dinner_view;
 
     private Button add_new_diary;
 
-    public List<DataSet> week_calories_list;
-    public List<DataSet> week_step_count_list;
     public int week_step_count = 0;
     public float week_expended_calories = 0;
 
@@ -103,23 +104,33 @@ public class HomeFragment extends Fragment {
         readStepCountHistoryData();
         readCaloriesHistoryData();
 
-        SharedPreferences sharedPref_calories = HomeFragment.this.getActivity().getSharedPreferences(
+        SharedPreferences sharedPref = HomeFragment.this.getActivity().getSharedPreferences(
                 "com.example.apple.urecipe.user_personal_model", Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor_calories = sharedPref_calories.edit();
-        editor_calories.putFloat("dialy_calories", expended_calories);
-        
+        SharedPreferences.Editor editor = sharedPref.edit();
+        editor.putFloat("dialy_calories", expended_calories);
+        user_bmr = sharedPref.getFloat("user_bmr", 0.0f);
+
+        DatabaseAccess databaseAccess = DatabaseAccess.getInstance(getContext());
+        databaseAccess.open();
+
         step_count_view = view.findViewById(R.id.step_count);
         step_count_view.setText("Step Count: " + String.valueOf(step_count));
         week_step_count_view = view.findViewById(R.id.week_step_count);
         week_step_count_view.setText("Week Step Count: " + String.valueOf(week_step_count));
         expended_calories_view = view.findViewById(R.id.expanded_calories);
-        expended_calories_view.setText(String.valueOf(expended_calories) + " Calories Needed");
-//        user_bmr_view = view.findViewById(R.id.user_bmr);
-//        user_bmr_view.setText("BMR: " + String.valueOf(user_bmr));
+        expended_calories_view.setText("Expended Calories today: " + String.valueOf(expended_calories));
         week_calories_view = view.findViewById(R.id.week_calories);
         week_calories_view.setText("Week Calories: " + String.valueOf(week_expended_calories));
         user_bmr_view = view.findViewById(R.id.user_bmr);
         user_bmr_view.setText("BMR: " + String.valueOf(user_bmr));
+
+        breakfast_view = view.findViewById(R.id.result_breakfast);
+        breakfast_view.setText(databaseAccess.getFoodNameHistory(0, "breakfast"));
+        lunch_view = view.findViewById(R.id.result_lunch);
+        lunch_view.setText(databaseAccess.getFoodNameHistory(0, "lunch"));
+        dinner_view = view.findViewById(R.id.result_dinner);
+        dinner_view.setText(databaseAccess.getFoodNameHistory(0, "dinner"));
+        databaseAccess.close();
 
         add_new_diary = (Button) view.findViewById(R.id.add_new_diary);
 
@@ -369,7 +380,7 @@ public class HomeFragment extends Fragment {
             for (Bucket bucket: dataReadResult.getBuckets()) {
                 List<DataSet> dataSets = bucket.getDataSets();
                 for (DataSet dataSet: dataSets) {
-//                    week_step_count += dataSet.getDataPoints().get(0).getValue(Field.FIELD_STEPS).asInt();
+                    week_step_count += dataSet.getDataPoints().get(0).getValue(Field.FIELD_STEPS).asInt();
                 }
             }
         }

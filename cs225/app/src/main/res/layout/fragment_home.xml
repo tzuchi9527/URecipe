@@ -27,8 +27,7 @@
             android:id="@+id/expanded_calories"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/step_count"
-            android:textSize="30sp" />
+            android:layout_below="@+id/week_step_count" />
 
 
         <TextView
@@ -55,8 +54,7 @@
             android:id="@+id/result_breakfast"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/breakfast"
-            android:text="Chocolate Marchmallow Eggs"/>
+            android:layout_below="@+id/breakfast"/>
 
         <TextView
             android:id="@+id/lunch"
