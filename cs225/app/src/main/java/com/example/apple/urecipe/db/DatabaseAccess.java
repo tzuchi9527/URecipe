@@ -8,7 +8,9 @@ import com.example.apple.urecipe.module.Food;
 import com.readystatesoftware.sqliteasset.SQLiteAssetHelper;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Date;
 
 public class DatabaseAccess {
     private SQLiteAssetHelper openHelper;
@@ -37,6 +39,64 @@ public class DatabaseAccess {
     }
 
     // Query
+    public String getPreference(){
+        String[] Ftype = {"beef","chicken","pork","meat","egg","vegetable","salad","seafood"};
+        int[] foodPre = {0,0,0,0,0,0,0,0};
+        c = db.rawQuery("select beef,chicken,pork,meat,egg,vegetable,salad,seafood from UserIntake\n" +
+                "left join Food_Nutri on UserIntake.Fid=Food_Nutri.Rid", new String[]{});
+        while (c.moveToNext()){
+            for (int i=0;i<8;i++){
+                int temp = bolstrToint(c.getString(i));
+                if (temp==1)
+                    foodPre[i] += temp;
+            }
+        }
+        int maxAt = 0;
+        for (int i = 0; i < foodPre.length; i++) {
+            maxAt = foodPre[i] > foodPre[maxAt] ? i : maxAt;
+        }
+        return Ftype[maxAt];
+    }
+
+    public int getHistoryByOption(String option, int dateBefore){
+        // option{calories,fat,protein}
+        // dateBefore:{0:today,1:yesterday,2:the day before yesterday...}
+        c = db.rawQuery("SELECT sum(Food_Nutri."+option+") " +
+                "FROM UserIntake,Food_Nutri "+
+                "WHERE UserIntake.Fdate = date('now','-"+Integer.toString(dateBefore)+" days','localtime') AND  "+
+                "UserIntake.Fid = Food_Nutri.Rid ",new String[]{});
+        if (c.moveToNext()){
+            return c.getInt(0);
+        }
+        else
+            return -1;
+
+    }
+
+    public void addFoodHistory(Food food, String F_type){
+        // Ftype: {"breakfast","lunch","dinner"}
+        String id = Integer.toString(food.getId());
+        c = db.rawQuery("INSERT OR REPLACE INTO UserIntake (Fdate, Ftype,Fid) VALUES (date('now','localtime'),'"
+                +F_type+"',"+id+")",new String[]{});
+        c.moveToFirst();
+        c.close();
+    }
+
+    public String getFoodNameHistory(int dateBefore, String F_type){
+        // dateBefore:{0:today,1:yesterday,2:the day before yesterday...}
+        // Ftype: {"breakfast","lunch","dinner"}
+        c = db.rawQuery("SELECT name " +
+                "FROM UserIntake, Food_Nutri " +
+                "WHERE UserIntake.Fid=Food_Nutri.Rid AND " +
+                "Fdate=date('now','-"+Integer.toString(dateBefore)+" days','localtime') AND Ftype='"+
+                F_type+"'",new String[]{});
+        if (c.moveToNext())
+            return c.getString(0);
+        else
+            return "";
+    }
+
+
     public List<Food> getFoodsByName(String n){
         c = db.rawQuery("SELECT * FROM Food_Nutri WHERE name LIKE '%" + n + "%' ORDER BY rating DESC LIMIT 10", new String[]{});
         List<Food> result = readCursor(c);
@@ -46,6 +106,18 @@ public class DatabaseAccess {
 //            return result.get(0).getName();
         return result;
     }
+
+    public List<Food> getFoodsByRecmd(String pref, String option, int min, int max){
+
+        c = db.rawQuery("SELECT * FROM Food_Nutri WHERE ("+pref+" = 'True') AND ("+option
+                +" BETWEEN "+min+" AND "+max+") ORDER BY rating DESC limit 10", new String[]{});
+        List<Food> result = readCursor(c);
+
+        return result;
+    }
+
+
+
 
 
     public List<Food> getFoodsByNutri(String option, Integer min, Integer max){
@@ -132,8 +204,16 @@ public class DatabaseAccess {
                     beef, chicken, pork, meat, egg, vegetable, salad, seafood,0);
             foodlist.add(newfood);
         }
+        c.close();
         return foodlist;
 
+    }
+
+    private int bolstrToint(String s){
+        if (s=="True")
+            return 1;
+        else
+            return 0;
     }
 
     private boolean intToBool (int i ){

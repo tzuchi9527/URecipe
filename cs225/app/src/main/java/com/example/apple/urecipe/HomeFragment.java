@@ -62,6 +62,9 @@ public class HomeFragment extends Fragment {
     private TextView user_bmr_view;
     private TextView week_step_count_view;
     private TextView week_calories_view;
+    private TextView breakfast_view;
+    private TextView lunch_view;
+    private TextView dinner_view;
 
     private Button add_new_diary;
 
@@ -107,6 +110,9 @@ public class HomeFragment extends Fragment {
         editor.putFloat("dialy_calories", expended_calories);
         user_bmr = sharedPref.getFloat("user_bmr", 0.0f);
 
+        DatabaseAccess databaseAccess = DatabaseAccess.getInstance(getContext());
+        databaseAccess.open();
+
         step_count_view = view.findViewById(R.id.step_count);
         step_count_view.setText("Step Count: " + String.valueOf(step_count));
         week_step_count_view = view.findViewById(R.id.week_step_count);
@@ -117,6 +123,14 @@ public class HomeFragment extends Fragment {
         week_calories_view.setText("Week Calories: " + String.valueOf(week_expended_calories));
         user_bmr_view = view.findViewById(R.id.user_bmr);
         user_bmr_view.setText("BMR: " + String.valueOf(user_bmr));
+
+        breakfast_view = view.findViewById(R.id.result_breakfast);
+        breakfast_view.setText(databaseAccess.getFoodNameHistory(0, "breakfast"));
+        lunch_view = view.findViewById(R.id.result_lunch);
+        lunch_view.setText(databaseAccess.getFoodNameHistory(0, "lunch"));
+        dinner_view = view.findViewById(R.id.result_dinner);
+        dinner_view.setText(databaseAccess.getFoodNameHistory(0, "dinner"));
+        databaseAccess.close();
 
         add_new_diary = (Button) view.findViewById(R.id.add_new_diary);
 
