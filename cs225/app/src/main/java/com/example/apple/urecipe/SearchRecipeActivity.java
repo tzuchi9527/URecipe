@@ -62,7 +62,7 @@ public class SearchRecipeActivity extends AppCompatActivity {
 
                 result_food = databaseAccess.getFoodsByName(food_name.getText().toString());
                 for (Food food: result_food) {
-                    result_list.add(food.getName());
+                    result_list.add(food.getName()+", "+food.getCalories()+" calories");
                 }
 
                 ArrayAdapter adapter = new ArrayAdapter<String>(SearchRecipeActivity.this,

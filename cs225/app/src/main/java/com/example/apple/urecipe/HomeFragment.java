@@ -388,7 +388,7 @@ public class HomeFragment extends Fragment {
             for (Bucket bucket: dataReadResult.getBuckets()) {
                 List<DataSet> dataSets = bucket.getDataSets();
                 for (DataSet dataSet: dataSets) {
-                    week_step_count += dataSet.getDataPoints().get(0).getValue(Field.FIELD_STEPS).asInt();
+//                    week_step_count += dataSet.getDataPoints().get(0).getValue(Field.FIELD_STEPS).asInt();
                 }
             }
         }
