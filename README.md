@@ -26,6 +26,9 @@ SearchRecipeActivity:
 - Search query in Food database we have
 - Record what user eat each day
 
+EditPersonalModelActivity:
+- Update the information of personal model
+
 module.Food:
 - Define object Food, which includes different properties of food, includes calories and other nutrition informations
 
