@@ -40,7 +40,7 @@ public class Recommendation {
     }
 
     public void getFoodData(){
-        intookCal = databaseAccess.getHistoryByOption(0, "calories");
+        intookCal = databaseAccess.getHistoryByOption("calories", 0);
         availCal = BMR + expendedCal - intookCal;
     }
 
