@@ -38,3 +38,7 @@ DatabaseOpenHelper:
 
 DatabaseAccess:
 - Include different query for searching database
+
+Recommendation:
+- Assess user's health state
+- Provide personalized recommendations according to user's health state and personal model
