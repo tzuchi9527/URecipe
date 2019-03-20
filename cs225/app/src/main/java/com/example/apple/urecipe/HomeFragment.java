@@ -112,7 +112,7 @@ public class HomeFragment extends Fragment {
         week_step_count_view = view.findViewById(R.id.week_step_count);
         week_step_count_view.setText("Week Step Count: " + String.valueOf(week_step_count));
         expended_calories_view = view.findViewById(R.id.expanded_calories);
-        expended_calories_view.setText("Expended Calories: " + String.valueOf(expended_calories));
+        expended_calories_view.setText(String.valueOf(expended_calories) + " Calories Needed");
         week_calories_view = view.findViewById(R.id.week_calories);
         week_calories_view.setText("Week Calories: " + String.valueOf(week_expended_calories));
         user_bmr_view = view.findViewById(R.id.user_bmr);

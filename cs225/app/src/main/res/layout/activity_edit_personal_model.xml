@@ -162,7 +162,7 @@
             android:layout_marginRight="8dp"
             android:layout_marginBottom="8dp"
             android:ems="10"
-            android:hint="push"
+            android:hint="Female/Male"
             android:inputType="text"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
